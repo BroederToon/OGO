@@ -89,7 +89,8 @@ public class XMLAccessor implements LoadAble, SaveAble{
 		}
 		catch (ParserConfigurationException pcx) {
 			System.err.println(PCE);
-		}	
+		}
+		presentation.setSlideNumber(0);
 	}
 
 	protected void loadSlideItem(Slide slide, Element item) {

@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  */
 public class MenuController extends MenuBar {
 	
-	private Frame parent; //The frame, only used as parent for the Dialogs
+	private SlideViewerFrame parent; //The frame, only used as parent for the Dialogs
 	private Presentation presentation; //Commands are given to the presentation
 	
 	private static final long serialVersionUID = 227L;
@@ -50,7 +50,7 @@ public class MenuController extends MenuBar {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
-	public MenuController(Frame frame, Presentation pres) {
+	public MenuController(SlideViewerFrame frame, Presentation pres) {
 		parent = frame;
 		presentation = pres;
 		MenuItem menuItem;
@@ -62,7 +62,7 @@ public class MenuController extends MenuBar {
 				LoadAble xmlAccessor = new XMLAccessor();
 				try {
 					xmlAccessor.loadFile(presentation, TESTFILE);
-					presentation.setSlideNumber(0);
+					parent.update(presentation);
 				} catch (IOException exc) {
 					JOptionPane.showMessageDialog(parent, IOEX + exc, 
          			LOADERR, JOptionPane.ERROR_MESSAGE);

@@ -55,7 +55,6 @@ public class SlideViewerComponent extends JComponent {
 		this.presentation = presentation;
 		this.slide = data;
 		repaint();
-		frame.setTitle(presentation.getTitle());
 	}
 
 //Draw the slide

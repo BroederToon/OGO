@@ -20,3 +20,8 @@
 
 ## MenuController
 - DataType XMLAccessor naar SaveAble en LoadAble voor expandability
+- opening a new presentation updates the parent frame
+- presentation.setSlideNumber(0); verplaatst naar XMLACCESSor loadFile omdat slidenumber altijd 0 moet zijn na het laden van een nieuwe presentation
+
+## SlideViewerComponent
+- update() frame update naar Frame verplaatst
