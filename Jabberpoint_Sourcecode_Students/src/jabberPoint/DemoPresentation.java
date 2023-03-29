@@ -1,6 +1,9 @@
 package jabberPoint;
 
+import jabberPoint.interfaces.SaveAble;
 import jabberPoint.style.StyleLevel;
+
+import java.io.IOException;
 
 /** A built-in demo presentation
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -12,7 +15,7 @@ import jabberPoint.style.StyleLevel;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-class DemoPresentation extends Accessor {
+class DemoPresentation implements SaveAble {
 
 	public void loadFile(Presentation presentation, String unusedFilename) {
 		presentation.setTitle("Demo Presentation");
@@ -52,7 +55,7 @@ class DemoPresentation extends Accessor {
 		presentation.append(slide);
 	}
 
-	public void saveFile(Presentation presentation, String unusedFilename) {
+	public void saveFile(Presentation presentation, String unusedFilename) throws IOException {
 		throw new IllegalStateException("Save As->Demo! called");
 	}
 }

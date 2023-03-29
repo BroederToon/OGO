@@ -10,6 +10,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import jabberPoint.interfaces.LoadAble;
+import jabberPoint.interfaces.SaveAble;
 import jabberPoint.style.StyleLevel;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
@@ -28,7 +30,7 @@ import org.w3c.dom.NodeList;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-public class XMLAccessor extends Accessor {
+public class XMLAccessor implements LoadAble, SaveAble{
 	
     /** Default API to use. */
     protected static final String DEFAULT_API_TO_USE = "dom";

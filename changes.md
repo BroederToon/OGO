@@ -14,3 +14,9 @@
 
 ## Algemeen
 - level ints naar level StyleLevel veranderd, voor XMLAccessor een int to StyleLevel methode gemaakt in StyleLevel.
+
+## Accessor
+- veranderen in twee interfaces. saveable en loadable
+
+## MenuController
+- DataType XMLAccessor naar SaveAble en LoadAble voor expandability
