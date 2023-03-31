@@ -1,10 +1,11 @@
 package jabberPoint.interfaces;
 
 import jabberPoint.Presentation;
+import jabberPoint.SlideViewerComponent;
 
 import java.io.IOException;
 
 public interface SaveAble {
 
-    void saveFile(Presentation presentation, String fileName) throws IOException;
+    void saveFile(SlideViewerComponent slideViewerComponent, String fileName) throws IOException;
 }

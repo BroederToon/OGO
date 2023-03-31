@@ -1,10 +1,11 @@
 package jabberPoint.interfaces;
 
 import jabberPoint.Presentation;
+import jabberPoint.SlideViewerComponent;
 
 import java.io.IOException;
 
 public interface LoadAble {
 
-    void loadFile(Presentation presentation, String fileName) throws IOException;
+    void loadFile(SlideViewerComponent slideViewerComponent, String fileName) throws IOException;
 }

@@ -21,11 +21,10 @@ import javax.swing.JFrame;
 
 public class SlideViewerComponent extends JComponent {
 		
-	private Slide slide; //The current slide
-	private Font labelFont = null; //The font for labels
-	private Presentation presentation = null; //The presentation
-	private JFrame frame = null;
-	
+	private Font labelFont; //The font for labels
+	private Presentation presentation; //The presentation
+	private int currentSlideNumber;
+
 	private static final long serialVersionUID = 227L;
 	
 	private static final Color BGCOLOR = Color.white;
@@ -36,24 +35,22 @@ public class SlideViewerComponent extends JComponent {
 	private static final int XPOS = 1100;
 	private static final int YPOS = 20;
 
-	public SlideViewerComponent(Presentation pres, JFrame frame) {
+	public SlideViewerComponent(Presentation pres) {
 		setBackground(BGCOLOR); 
 		presentation = pres;
 		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
-		this.frame = frame;
 	}
 
 	public Dimension getPreferredSize() {
 		return new Dimension(Slide.WIDTH, Slide.HEIGHT);
 	}
 
-	public void update(Presentation presentation, Slide data) {
-		if (data == null) {
-			repaint();
-			return;
-		}
+	public void update(Presentation presentation) {
 		this.presentation = presentation;
-		this.slide = data;
+		repaint();
+	}
+
+	public void update(){
 		repaint();
 	}
 
@@ -61,14 +58,41 @@ public class SlideViewerComponent extends JComponent {
 	public void paintComponent(Graphics g) {
 		g.setColor(BGCOLOR);
 		g.fillRect(0, 0, getSize().width, getSize().height);
-		if (presentation.getSlideNumber() < 0 || slide == null) {
+		if (currentSlideNumber < 0 || presentation.getCurrentSlide(currentSlideNumber) == null) {
 			return;
 		}
 		g.setFont(labelFont);
 		g.setColor(COLOR);
-		g.drawString("Slide " + (1 + presentation.getSlideNumber()) + " of " +
+		g.drawString("Slide " + (1 + currentSlideNumber) + " of " +
                  presentation.getSize(), XPOS, YPOS);
 		Rectangle area = new Rectangle(0, YPOS, getWidth(), (getHeight() - YPOS));
-		slide.draw(g, area, this);
+		presentation.getCurrentSlide(currentSlideNumber).draw(g, area, this);
+	}
+
+	public void setSlideNumber(int number) {
+		currentSlideNumber = number;
+		update();
+	}
+
+	//Navigate to the previous slide unless we are at the first slide
+	public void prevSlide() {
+		if (currentSlideNumber > 0) {
+			setSlideNumber(currentSlideNumber - 1);
+		}
+	}
+
+	//Navigate to the next slide unless we are at the last slide
+	public void nextSlide() {
+		if (currentSlideNumber < (presentation.getSize()-1)) {
+			setSlideNumber(currentSlideNumber + 1);
+		}
+	}
+
+	public void exit(int n) {
+		System.exit(n);
+	}
+
+	public Presentation getPresentation(){
+		return this.presentation;
 	}
 }

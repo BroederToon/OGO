@@ -1,4 +1,6 @@
-package jabberPoint;
+package jabberPoint.navigation;
+
+import jabberPoint.SlideViewerComponent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
@@ -14,10 +16,10 @@ import java.awt.event.KeyAdapter;
 */
 
 public class KeyController extends KeyAdapter {
-	private Presentation presentation; //Commands are given to the presentation
+	private SlideViewerComponent slideViewerComponent; //Commands are given to the presentation
 
-	public KeyController(Presentation p) {
-		presentation = p;
+	public KeyController(SlideViewerComponent s) {
+		this.slideViewerComponent = s;
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
@@ -26,12 +28,12 @@ public class KeyController extends KeyAdapter {
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_ENTER:
 			case '+':
-				presentation.nextSlide();
+				this.slideViewerComponent.nextSlide();
 				break;
 			case KeyEvent.VK_PAGE_UP:
 			case KeyEvent.VK_UP:
 			case '-':
-				presentation.prevSlide();
+				this.slideViewerComponent.prevSlide();
 				break;
 			case 'q':
 			case 'Q':

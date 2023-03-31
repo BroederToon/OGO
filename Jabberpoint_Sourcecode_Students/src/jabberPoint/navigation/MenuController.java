@@ -1,10 +1,10 @@
-package jabberPoint;
+package jabberPoint.navigation;
 
+import jabberPoint.*;
 import jabberPoint.interfaces.LoadAble;
 import jabberPoint.interfaces.SaveAble;
 
 import java.awt.MenuBar;
-import java.awt.Frame;
 import java.awt.Menu;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
@@ -26,7 +26,9 @@ import javax.swing.JOptionPane;
 public class MenuController extends MenuBar {
 	
 	private SlideViewerFrame parent; //The frame, only used as parent for the Dialogs
-	private Presentation presentation; //Commands are given to the presentation
+	private SlideViewerComponent slideViewerComponent; //Commands are given to the presentation
+	private final SaveAble saveAble = new XMLAccessor();
+	private final LoadAble loadAble = new XMLAccessor();
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -50,41 +52,37 @@ public class MenuController extends MenuBar {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
-	public MenuController(SlideViewerFrame frame, Presentation pres) {
-		parent = frame;
-		presentation = pres;
+	public void createMenu(){
+		Presentation presentation = this.slideViewerComponent.getPresentation();
 		MenuItem menuItem;
 		Menu fileMenu = new Menu(FILE);
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.clear();
-				LoadAble xmlAccessor = new XMLAccessor();
 				try {
-					xmlAccessor.loadFile(presentation, TESTFILE);
+					loadAble.loadFile(slideViewerComponent, TESTFILE);
 					parent.update(presentation);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
-         			LOADERR, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(parent, IOEX + exc,
+							LOADERR, JOptionPane.ERROR_MESSAGE);
 				}
-				parent.repaint();
 			}
 		} );
 		fileMenu.add(menuItem = mkMenuItem(NEW));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.clear();
-				parent.repaint();
+				parent.update(presentation);
 			}
 		});
 		fileMenu.add(menuItem = mkMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaveAble xmlAccessor = new XMLAccessor();
 				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
+					saveAble.saveFile(slideViewerComponent, SAVEFILE);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc, 
+					JOptionPane.showMessageDialog(parent, IOEX + exc,
 							SAVEERR, JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -93,7 +91,7 @@ public class MenuController extends MenuBar {
 		fileMenu.add(menuItem = mkMenuItem(EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.exit(0);
+				slideViewerComponent.exit(0);
 			}
 		});
 		add(fileMenu);
@@ -101,13 +99,13 @@ public class MenuController extends MenuBar {
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.nextSlide();
+				slideViewerComponent.nextSlide();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				presentation.prevSlide();
+				slideViewerComponent.prevSlide();
 			}
 		});
 		viewMenu.add(menuItem = mkMenuItem(GOTO));
@@ -115,7 +113,7 @@ public class MenuController extends MenuBar {
 			public void actionPerformed(ActionEvent actionEvent) {
 				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
-				presentation.setSlideNumber(pageNumber - 1);
+				slideViewerComponent.setSlideNumber(pageNumber - 1);
 			}
 		});
 		add(viewMenu);
@@ -126,7 +124,16 @@ public class MenuController extends MenuBar {
 				AboutBox.show(parent);
 			}
 		});
-		setHelpMenu(helpMenu);		//Needed for portability (Motif, etc.).
+		setHelpMenu(helpMenu);
+	}
+
+	public MenuController(SlideViewerFrame frame) {
+		this.parent = frame;
+		this.slideViewerComponent = this.parent.getSlideViewerComponent();
+	}
+
+	private void buildMenu(MenuItem menuItem){
+
 	}
 
 //Creating a menu-item

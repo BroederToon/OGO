@@ -29,14 +29,13 @@ public class JabberPoint {
 	public static void main(String[] argv) {
 
 		Presentation presentation = new Presentation();
-		new SlideViewerFrame(JABVERSION, presentation);
+		SlideViewerFrame frame = new SlideViewerFrame(JABVERSION, presentation);
 		try {
 			if (argv.length == 0) { //a demo presentation
-				new DemoPresentation().loadFile(presentation, "");
+				new DemoPresentation().loadFile(frame.getSlideViewerComponent(), "");
 			} else {
-				new XMLAccessor().loadFile(presentation, argv[0]);
+				new XMLAccessor().loadFile(frame.getSlideViewerComponent(), argv[0]);
 			}
-			presentation.setSlideNumber(0);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,
 					IOERR + ex, JABERR,

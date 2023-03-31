@@ -1,7 +1,9 @@
 package jabberPoint;
 
+import jabberPoint.interfaces.LoadAble;
 import jabberPoint.interfaces.SaveAble;
 import jabberPoint.style.StyleLevel;
+import jdk.jfr.Label;
 
 import java.io.IOException;
 
@@ -15,9 +17,10 @@ import java.io.IOException;
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
 
-class DemoPresentation implements SaveAble {
+public class DemoPresentation implements SaveAble, LoadAble {
 
-	public void loadFile(Presentation presentation, String unusedFilename) {
+	public void loadFile(SlideViewerComponent slideViewerComponent, String unusedFilename) {
+		Presentation presentation = slideViewerComponent.getPresentation();
 		presentation.setTitle("Demo Presentation");
 		Slide slide;
 		slide = new Slide();
@@ -55,7 +58,7 @@ class DemoPresentation implements SaveAble {
 		presentation.append(slide);
 	}
 
-	public void saveFile(Presentation presentation, String unusedFilename) throws IOException {
+	public void saveFile(SlideViewerComponent slideViewerComponent, String unusedFilename) throws IOException {
 		throw new IllegalStateException("Save As->Demo! called");
 	}
 }

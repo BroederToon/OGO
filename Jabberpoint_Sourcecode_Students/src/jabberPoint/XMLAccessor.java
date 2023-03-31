@@ -57,7 +57,8 @@ public class XMLAccessor implements LoadAble, SaveAble{
     	
     }
 
-	public void loadFile(Presentation presentation, String filename) throws IOException {
+	public void loadFile(SlideViewerComponent slideViewerComponent, String filename) throws IOException {
+    	Presentation presentation = slideViewerComponent.getPresentation();
 		int slideNumber, itemNumber, max = 0, maxItems = 0;
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
@@ -90,7 +91,11 @@ public class XMLAccessor implements LoadAble, SaveAble{
 		catch (ParserConfigurationException pcx) {
 			System.err.println(PCE);
 		}
-		presentation.setSlideNumber(0);
+		slideViewerComponent.setSlideNumber(0);
+	}
+
+	public void loadDemoFile(){
+
 	}
 
 	protected void loadSlideItem(Slide slide, Element item) {
@@ -119,7 +124,8 @@ public class XMLAccessor implements LoadAble, SaveAble{
 		}
 	}
 
-	public void saveFile(Presentation presentation, String filename) throws IOException {
+	public void saveFile(SlideViewerComponent slideViewerComponent, String filename) throws IOException {
+    	Presentation presentation = slideViewerComponent.getPresentation();
 		PrintWriter out = new PrintWriter(new FileWriter(filename));
 		out.println("<?xml version=\"1.0\"?>");
 		out.println("<!DOCTYPE presentation SYSTEM \"jabberpoint.dtd\">");
