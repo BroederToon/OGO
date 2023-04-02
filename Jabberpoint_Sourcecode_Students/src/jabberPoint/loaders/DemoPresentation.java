@@ -1,9 +1,9 @@
-package jabberPoint;
+package jabberPoint.loaders;
 
 import jabberPoint.interfaces.LoadAble;
 import jabberPoint.interfaces.SaveAble;
+import jabberPoint.presentation.*;
 import jabberPoint.style.StyleLevel;
-import jdk.jfr.Label;
 
 import java.io.IOException;
 
@@ -22,8 +22,15 @@ public class DemoPresentation implements SaveAble, LoadAble {
 	public void loadFile(SlideViewerComponent slideViewerComponent, String unusedFilename) {
 		Presentation presentation = slideViewerComponent.getPresentation();
 		presentation.setTitle("Demo Presentation");
+
+		presentation.append(this.createFirstSlide());
+		presentation.append(this.createSecondSlide());
+		presentation.append(this.createThirdSlide());
+	}
+
+	private Slide createFirstSlide(){
 		Slide slide;
-		slide = new Slide();
+		slide = PresentationFactory.createSlide();
 		slide.setTitle("JabberPoint");
 		slide.append(StyleLevel.ONE, "The Java prestentation tool");
 		slide.append(StyleLevel.TWO, "Copyright (c) 1996-2000: Ian Darwin");
@@ -35,9 +42,12 @@ public class DemoPresentation implements SaveAble, LoadAble {
 		slide.append(StyleLevel.THREE, "Next slide: PgDn or Enter");
 		slide.append(StyleLevel.THREE, "Previous slide: PgUp or up-arrow");
 		slide.append(StyleLevel.THREE, "Quit: q or Q");
-		presentation.append(slide);
+		return slide;
+	}
 
-		slide = new Slide();
+	private Slide createSecondSlide(){
+		Slide slide;
+		slide = PresentationFactory.createSlide();
 		slide.setTitle("Demonstration of levels and styles");
 		slide.append(StyleLevel.ONE, "Level 1");
 		slide.append(StyleLevel.TWO, "Level 2");
@@ -46,16 +56,19 @@ public class DemoPresentation implements SaveAble, LoadAble {
 		slide.append(StyleLevel.TWO, "Level 2 has style number 2");
 		slide.append(StyleLevel.THREE, "This is how level 3 looks like");
 		slide.append(StyleLevel.FOUR, "And this is level 4");
-		presentation.append(slide);
+		return slide;
+	}
 
-		slide = new Slide();
+	private Slide createThirdSlide(){
+		Slide slide;
+		slide = PresentationFactory.createSlide();
 		slide.setTitle("The third slide");
 		slide.append(StyleLevel.ONE, "To open a new presentation,");
 		slide.append(StyleLevel.TWO, "use File->Open from the menu.");
 		slide.append(StyleLevel.ONE, " ");
 		slide.append(StyleLevel.ONE, "This is the end of the presentation.");
-		slide.append(new BitmapItem(StyleLevel.ONE, "JabberPoint.jpg"));
-		presentation.append(slide);
+		slide.append(PresentationFactory.createBitmapItem(StyleLevel.ONE, "JabberPoint.jpg"));
+		return slide;
 	}
 
 	public void saveFile(SlideViewerComponent slideViewerComponent, String unusedFilename) throws IOException {

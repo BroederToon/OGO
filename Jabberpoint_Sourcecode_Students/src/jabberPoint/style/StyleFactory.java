@@ -2,7 +2,7 @@ package jabberPoint.style;
 
 import java.awt.*;
 
-public class StyleFactory {
+public abstract class StyleFactory {
     private static final String FONTNAME = "Helvetica";
 
     public static Style createStyle(StyleLevel level) throws LevelNotImplementedException{
@@ -16,7 +16,13 @@ public class StyleFactory {
         throw new LevelNotImplementedException();
     }
 
+    //font for a style
     public static Font createFont(int fontSize){
         return new Font(StyleFactory.FONTNAME, Font.BOLD, fontSize);
+    }
+
+    //regular font
+    public static Font createFont(String fontName, int style, int fontSize){
+        return new Font(fontName, style, fontSize);
     }
 }

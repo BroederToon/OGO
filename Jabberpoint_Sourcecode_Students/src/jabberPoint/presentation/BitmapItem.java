@@ -1,4 +1,4 @@
-package jabberPoint;
+package jabberPoint.presentation;
 
 import jabberPoint.style.Style;
 import jabberPoint.style.StyleLevel;

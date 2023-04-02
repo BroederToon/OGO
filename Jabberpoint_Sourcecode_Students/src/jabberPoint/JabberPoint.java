@@ -1,6 +1,11 @@
 package jabberPoint;
 
-import jabberPoint.style.Style;
+import jabberPoint.loaders.DemoPresentation;
+import jabberPoint.loaders.LoaderFactory;
+import jabberPoint.loaders.XMLAccessor;
+import jabberPoint.presentation.Presentation;
+import jabberPoint.presentation.PresentationFactory;
+import jabberPoint.presentation.SlideViewerFrame;
 
 import javax.swing.JOptionPane;
 
@@ -28,13 +33,13 @@ public class JabberPoint {
 	/** The main program */
 	public static void main(String[] argv) {
 
-		Presentation presentation = new Presentation();
-		SlideViewerFrame frame = new SlideViewerFrame(JABVERSION, presentation);
+		Presentation presentation = PresentationFactory.createPresentation();
+		SlideViewerFrame frame = PresentationFactory.createSlideViewerFrame(JABVERSION, presentation);
 		try {
 			if (argv.length == 0) { //a demo presentation
-				new DemoPresentation().loadFile(frame.getSlideViewerComponent(), "");
+				LoaderFactory.createDemoPresentation().loadFile(frame.getSlideViewerComponent(), "");
 			} else {
-				new XMLAccessor().loadFile(frame.getSlideViewerComponent(), argv[0]);
+				LoaderFactory.createXMLAccessor().loadFile(frame.getSlideViewerComponent(), argv[0]);
 			}
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,

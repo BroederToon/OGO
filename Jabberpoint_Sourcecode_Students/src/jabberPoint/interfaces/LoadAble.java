@@ -1,7 +1,6 @@
 package jabberPoint.interfaces;
 
-import jabberPoint.Presentation;
-import jabberPoint.SlideViewerComponent;
+import jabberPoint.presentation.SlideViewerComponent;
 
 import java.io.IOException;
 

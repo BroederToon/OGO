@@ -1,4 +1,6 @@
-package jabberPoint;
+package jabberPoint.presentation;
+
+import jabberPoint.style.StyleFactory;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 
 /** <p>SlideViewerComponent is a graphical component that ca display Slides.</p>
@@ -38,7 +39,7 @@ public class SlideViewerComponent extends JComponent {
 	public SlideViewerComponent(Presentation pres) {
 		setBackground(BGCOLOR); 
 		presentation = pres;
-		labelFont = new Font(FONTNAME, FONTSTYLE, FONTHEIGHT);
+		labelFont = StyleFactory.createFont(FONTNAME, FONTSTYLE, FONTHEIGHT);
 	}
 
 	public Dimension getPreferredSize() {

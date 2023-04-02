@@ -1,4 +1,4 @@
-package jabberPoint;
+package jabberPoint.presentation;
 
 import java.util.ArrayList;
 

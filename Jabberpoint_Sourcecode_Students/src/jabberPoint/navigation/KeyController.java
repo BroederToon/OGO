@@ -1,6 +1,6 @@
 package jabberPoint.navigation;
 
-import jabberPoint.SlideViewerComponent;
+import jabberPoint.presentation.SlideViewerComponent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;

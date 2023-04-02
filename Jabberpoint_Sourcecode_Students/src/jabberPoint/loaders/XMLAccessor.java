@@ -1,4 +1,4 @@
-package jabberPoint;
+package jabberPoint.loaders;
 
 import java.util.Vector;
 import java.io.File;
@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jabberPoint.interfaces.LoadAble;
 import jabberPoint.interfaces.SaveAble;
+import jabberPoint.presentation.*;
 import jabberPoint.style.StyleLevel;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Document;
@@ -70,7 +71,7 @@ public class XMLAccessor implements LoadAble, SaveAble{
 			max = slides.getLength();
 			for (slideNumber = 0; slideNumber < max; slideNumber++) {
 				Element xmlSlide = (Element) slides.item(slideNumber);
-				Slide slide = new Slide();
+				Slide slide = PresentationFactory.createSlide();
 				slide.setTitle(getTitle(xmlSlide, SLIDETITLE));
 				presentation.append(slide);
 				
@@ -112,11 +113,11 @@ public class XMLAccessor implements LoadAble, SaveAble{
 		}
 		String type = attributes.getNamedItem(KIND).getTextContent();
 		if (TEXT.equals(type)) {
-			slide.append(new TextItem(level, item.getTextContent()));
+			slide.append(PresentationFactory.createTextItem(level, item.getTextContent()));
 		}
 		else {
 			if (IMAGE.equals(type)) {
-				slide.append(new BitmapItem(level, item.getTextContent()));
+				slide.append(PresentationFactory.createBitmapItem(level, item.getTextContent()));
 			}
 			else {
 				System.err.println(UNKNOWNTYPE);

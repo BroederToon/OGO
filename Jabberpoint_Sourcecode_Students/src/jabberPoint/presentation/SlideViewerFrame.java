@@ -1,7 +1,8 @@
-package jabberPoint;
+package jabberPoint.presentation;
 
 import jabberPoint.navigation.KeyController;
 import jabberPoint.navigation.MenuController;
+import jabberPoint.navigation.MenuFactory;
 
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
@@ -29,7 +30,7 @@ public class SlideViewerFrame extends JFrame {
 	
 	public SlideViewerFrame(String title, Presentation presentation) {
 		super(title);
-		this.slideViewerComponent = new SlideViewerComponent(presentation);
+		this.slideViewerComponent = PresentationFactory.createSlideViewerComponent(presentation);
 		this.slideViewerComponent.setSlideNumber(0);
 		setupWindow();
 	}
@@ -43,8 +44,8 @@ public class SlideViewerFrame extends JFrame {
 				}
 			});
 		getContentPane().add(slideViewerComponent);
-		addKeyListener(new KeyController(slideViewerComponent)); //Add a controller
-		setMenuBar(new MenuController(this));	//Add another controller
+		addKeyListener(MenuFactory.createKeyController(slideViewerComponent)); //Add a controller
+		setMenuBar(MenuFactory.createMenuController(this));	//Add another controller
 		setSize(new Dimension(WIDTH, HEIGHT)); //Same sizes a slide has
 		setVisible(true);
 	}

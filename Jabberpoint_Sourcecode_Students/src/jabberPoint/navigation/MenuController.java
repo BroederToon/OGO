@@ -1,8 +1,12 @@
 package jabberPoint.navigation;
 
-import jabberPoint.*;
 import jabberPoint.interfaces.LoadAble;
 import jabberPoint.interfaces.SaveAble;
+import jabberPoint.loaders.LoaderFactory;
+import jabberPoint.loaders.XMLAccessor;
+import jabberPoint.presentation.Presentation;
+import jabberPoint.presentation.SlideViewerComponent;
+import jabberPoint.presentation.SlideViewerFrame;
 
 import java.awt.MenuBar;
 import java.awt.Menu;
@@ -27,8 +31,8 @@ public class MenuController extends MenuBar {
 	
 	private SlideViewerFrame parent; //The frame, only used as parent for the Dialogs
 	private SlideViewerComponent slideViewerComponent; //Commands are given to the presentation
-	private final SaveAble saveAble = new XMLAccessor();
-	private final LoadAble loadAble = new XMLAccessor();
+	private final SaveAble saveAble = LoaderFactory.createXMLAccessor();
+	private final LoadAble loadAble = LoaderFactory.createXMLAccessor();
 	
 	private static final long serialVersionUID = 227L;
 	
@@ -52,9 +56,23 @@ public class MenuController extends MenuBar {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
-	public void createMenu(){
+
+	public MenuController(SlideViewerFrame frame) {
+		this.parent = frame;
+		this.slideViewerComponent = this.parent.getSlideViewerComponent();
+		this.createMenu();
+	}
+
+	private void createMenu(){
 		Presentation presentation = this.slideViewerComponent.getPresentation();
+		this.createFileMenu();
+		this.createViewMenu();
+		this.createHelpMenu();
+	}
+
+	private void createFileMenu(){
 		MenuItem menuItem;
+		Presentation presentation = this.slideViewerComponent.getPresentation();
 		Menu fileMenu = new Menu(FILE);
 		fileMenu.add(menuItem = mkMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
@@ -95,6 +113,11 @@ public class MenuController extends MenuBar {
 			}
 		});
 		add(fileMenu);
+	}
+
+	private void createViewMenu(){
+		MenuItem menuItem;
+		Presentation presentation = this.slideViewerComponent.getPresentation();
 		Menu viewMenu = new Menu(VIEW);
 		viewMenu.add(menuItem = mkMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
@@ -117,6 +140,11 @@ public class MenuController extends MenuBar {
 			}
 		});
 		add(viewMenu);
+	}
+
+	private void createHelpMenu(){
+		MenuItem menuItem;
+		Presentation presentation = this.slideViewerComponent.getPresentation();
 		Menu helpMenu = new Menu(HELP);
 		helpMenu.add(menuItem = mkMenuItem(ABOUT));
 		menuItem.addActionListener(new ActionListener() {
@@ -125,15 +153,6 @@ public class MenuController extends MenuBar {
 			}
 		});
 		setHelpMenu(helpMenu);
-	}
-
-	public MenuController(SlideViewerFrame frame) {
-		this.parent = frame;
-		this.slideViewerComponent = this.parent.getSlideViewerComponent();
-	}
-
-	private void buildMenu(MenuItem menuItem){
-
 	}
 
 //Creating a menu-item

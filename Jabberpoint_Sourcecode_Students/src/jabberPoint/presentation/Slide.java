@@ -1,4 +1,4 @@
-package jabberPoint;
+package jabberPoint.presentation;
 
 import jabberPoint.style.LevelNotImplementedException;
 import jabberPoint.style.Style;
@@ -47,12 +47,12 @@ public class Slide {
 
 	//Create a TextItem out of a String and add the TextItem
 	public void append(StyleLevel level, String message) {
-		append(new TextItem(level, message));
+		append(PresentationFactory.createTextItem(level, message));
 	}
 
 	//Returns the SlideItem
 	public SlideItem getSlideItem(int number) {
-		return (SlideItem)items.elementAt(number);
+		return items.elementAt(number);
 	}
 
 	//Return all the SlideItems in a vector
@@ -70,7 +70,7 @@ public class Slide {
 		float scale = getScale(area);
 	    int y = area.y;
 	//The title is treated separately
-	    SlideItem slideItem = new TextItem(StyleLevel.ZERO, getTitle());
+	    SlideItem slideItem = PresentationFactory.createTextItem(StyleLevel.ZERO, getTitle());
 	    try {
 			Style style = StyleFactory.createStyle(slideItem.getLevel());
 			slideItem.draw(area.x, y, scale, g, style, view);
