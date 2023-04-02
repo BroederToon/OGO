@@ -95,10 +95,6 @@ public class XMLAccessor implements LoadAble, SaveAble{
 		slideViewerComponent.setSlideNumber(0);
 	}
 
-	public void loadDemoFile(){
-
-	}
-
 	protected void loadSlideItem(Slide slide, Element item) {
 		StyleLevel level = StyleLevel.ONE; // default
 		NamedNodeMap attributes = item.getAttributes();
